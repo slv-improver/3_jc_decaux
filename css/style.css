@@ -1,1 +1,40 @@
-.map{height:500px;width:100%}/*# sourceMappingURL=style.css.map */
+/* * {
+    border: blue 1px solid;
+} */
+
+#slide {
+    width: 60%;
+    margin: auto;
+    position: relative;
+}
+#slide figure {
+    position: relative;
+    margin-right: 0;
+    margin-left: 0;
+}
+#slide img {
+    width: 100%;
+}
+#slide figcaption {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    color: white;
+    background: #00000080;
+    padding: 15px;
+}
+#nav-icons {
+    text-align: center;
+}
+#nav-icons .material-icons {
+    color: #a6081a;
+    background: #74ba3e;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+}
+
+
+
+#mapid{height:500px;width:60%;margin:16px auto;}/*# sourceMappingURL=style.css.map */
