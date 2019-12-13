@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-        crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-        crossorigin=""></script>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <title>Location EnRoute EnLigne </title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
+	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  crossorigin=""></script>
+	<link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<title>Location EnRoute EnLigne </title>
 </head>
 <body>
-
-    <!-- diapo area -->
-    <div id="slide">
-        <figure>
-            <img src="" alt="">
-            <figcaption>
-                
-            </figcaption>
-        </figure>
-        <div id="nav-icons">
-            <i class="material-icons previous">skip_previous</i>
-            <i class="material-icons control">pause</i>
-            <i class="material-icons next">skip_next</i>
-        </div>
-    </div>
-
+  
+  <!-- diapo area -->
+	<div id="sliderWrapper">
+    
+  </div>
+  
+	<div id="app-wrapper">
     <!-- map area -->
-    <div id="mapid">
+		<div id="mapid">
+      
+    </div>
+		
+		<!-- booking area -->
+		<form>
+      <fieldset id="station">
+        <legend>Détails de la station</legend>
+				<p>Adresse : <span id="address"></span></p>
+				<p><span id="places"></span> places</p>
+				<p><span id="available"></span> vélos disponibles</p>
+				<p><label for="name">Nom : <input type="text" id="name"></label></p>
+				<p><label for="firstname">Prenom : <input type="text" id="firstname"></label></p>
+				<p><input type="button" value="Réserver" id="booking"></input></p>
+			</fieldset>
+			<canvas id="canvas">Your browser does not support canvas tag.</canvas>
+		</form>
+  </div>
 
-    </div>
-    
-    <!-- booking area -->
-    <div id="booking">
-        
-    </div>
-    
-    <script src="./js/ajax.js"></script>
-    <script src="./js/map.js"></script>
-    <script src="./js/index.js"></script>
+	<script src="js/Slider.js"></script>
+	<script src="./js/Canvas.js"></script>
+	<script src="js/Form.js"></script>
+	<script src="./js/Map.js"></script>
+	<script src="./js/index.js"></script>
 </body>
 </html>
