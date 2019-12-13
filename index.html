@@ -25,21 +25,33 @@
             </figcaption>
         </figure>
         <div id="nav-icons">
-            <i class="material-icons previous">skip_previous</i>
-            <i class="material-icons control">pause</i>
-            <i class="material-icons next">skip_next</i>
+            <i class="material-icons">skip_previous</i>
+            <i class="material-icons">pause</i>
+            <i class="material-icons">skip_next</i>
         </div>
     </div>
 
-    <!-- map area -->
-    <div id="mapid">
+    <div id="app">
+            <!-- map area -->
+        <div id="mapid">
 
-    </div>
-    
-    <!-- booking area -->
-    <div id="booking">
+        </div>
         
+        <!-- booking area -->
+        <form id="booking">
+            <fieldset id="station">
+                <legend>Détails de la station</legend>
+                <p>Adresse : <span id="address"></span></p>
+                <p><span id="places"></span> places</p>
+                <p><span id="available"></span> vélos disponibles</p>
+                <p><label for="name">Nom : <input type="text" id="name"></label></p>
+                <p><label for="firstname">Prenom : <input type="text" id="firstname"></label></p>
+                <p><button type="submit">Réserver</button></p>
+            </fieldset>
+            <canvas id="signature"></canvas>
+        </form>
     </div>
+
     
     <script src="./js/ajax.js"></script>
     <script src="./js/map.js"></script>

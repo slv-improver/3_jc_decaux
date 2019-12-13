@@ -35,6 +35,24 @@
     cursor: pointer;
 }
 
+#app {
+    display: flex;
+}
 
+#booking fieldset {
+    border-radius: 10px;
+    box-shadow: 2px 2px rgb(173, 173, 173);
+    width: 300px;
+    display: none;
+    margin: 0 auto;
+}
+#signature {
+    border: double 5px black;
+    display: none;
+    margin: 0 auto;
+}
+img:focus-within {
+    display: none;
+}
 
 #mapid{height:500px;width:60%;margin:16px auto;}/*# sourceMappingURL=style.css.map */
