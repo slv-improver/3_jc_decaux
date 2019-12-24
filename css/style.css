@@ -55,7 +55,7 @@ fieldset {
 #canvas {
 	border: double 5px black;
 	display: none;
-  margin: 0 auto;
+  margin: 15px auto;
   cursor: pointer;
 }
 img:focus-within {
