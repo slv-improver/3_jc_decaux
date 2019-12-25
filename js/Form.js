@@ -19,7 +19,7 @@ class Form {
 	bookingListener() {
 		this.submit.addEventListener('click', () => {
 			if (this.signature) {
-				this.submit.insertAdjacentText('afterend', 'Veuillez signer puis valider');
+				
 				this.canvas = new Canvas(document.getElementById("canvas"));
 			} else {
 				// storage

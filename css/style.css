@@ -52,14 +52,23 @@ fieldset {
 	display: none;
 	margin: 0 auto;
 }
-#canvas {
-	border: double 5px black;
-	display: none;
-  margin: 15px auto;
+#canvas-container {
+  position: relative;
+  display: none;
+  text-align: center;
+}
+#canvas-container * {
   cursor: pointer;
 }
-img:focus-within {
-	display: none;
+#canvas-container .close {
+  position: absolute;
+  right: 25px;
+  top: 20px;
+}
+#canvas {
+	border: double 5px black;
+  margin: 15px auto;
+  cursor: pointer;
 }
 
 #mapid{height:500px;width:60%;margin:auto;}

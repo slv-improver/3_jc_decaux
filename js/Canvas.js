@@ -6,12 +6,22 @@ class Canvas {
     this.clickY = new Array();
     this.clickDrag = new Array();
     this.paint;
+    this.clearBtn = document.getElementById('clear');
+    this.doneBtn = document.getElementById('confirmation');
     this.showCanvas();
     this.onClick();
+    this.showHelper();
+    this.eventListener()
   }
 
   showCanvas() {
-    this.canvas.style.display = 'block';
+    document.getElementById('canvas-container').style.display = 'block';
+  }
+
+  showHelper() {
+    this.context.font = '20px serif';
+    this.context.fillText('Veuillez signez et valider', 5, 15);
+    this.context.fillText('pour confirmer la réservation', 10, 30);
   }
 
   addClick(x, y, dragging){
@@ -20,12 +30,24 @@ class Canvas {
     this.clickDrag.push(dragging);
   }
 
-  draw() {
+  eventListener() {
+    this.clearBtn.addEventListener('click', () => {
+      this.clear();
+      this.clickX = new Array();
+      this.clickY = new Array();
+      this.clickDrag = new Array();
+    });
+  }
+  clear() {
     this.context.clearRect(
       0, 0,
       this.context.canvas.width,
       this.context.canvas.height
-    ); // Clears the canvas
+    );
+  }
+
+  draw() {
+    this.clear(); // Clears the canvas
 
     this.context.strokeStyle = "#1a74db";
     this.context.lineJoin = "round";
@@ -48,13 +70,13 @@ class Canvas {
     var mainThis = this;
     $('#canvas').mousedown(function(e){
       mainThis.paint = true;
-      mainThis.addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+      mainThis.addClick(e.offsetX, e.offsetY);
       mainThis.draw();
     });
     
     $('#canvas').mousemove(function(e){
       if(mainThis.paint){
-        mainThis.addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+        mainThis.addClick(e.offsetX, e.offsetY, true);
         mainThis.draw();
       }
     });

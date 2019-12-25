@@ -11,8 +11,8 @@ class Map {
 		this.url = "https://api.jcdecaux.com/vls/v1/stations?contract=" + contractName + "&apiKey=" + apiKey;
 		this.addLayer();
 		this.ajaxGet(this.url, this.addMarker.bind(this));
-    this.hiddenForm();
-    this.form;
+		this.hiddenForm();
+		this.form;
 	}
 	
 	addLayer() {
@@ -52,7 +52,7 @@ class Map {
 			let station = L.marker([element.position.lat, element.position.lng], {
         icon: this.bikeIcon}).addTo(this.mymap).bindPopup(element.address);
 			station.addEventListener('click', function() {
-        this.form = new Form(element); 
+        this.form = new Form(element, true); 
       }.bind(this));
 		});
 	}                                                     
