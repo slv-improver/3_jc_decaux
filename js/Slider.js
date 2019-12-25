@@ -28,13 +28,13 @@ class Slider {
 			let controller = document.createElement("div");
 			controller.id = "controller";
 			this.btnPrevious = document.createElement('i');
-			this.btnPrevious.textContent = "skip_previous";
+			this.btnPrevious.textContent = "skip_previous";/* navigate_before */
 			this.btnPrevious.className = "material-icons";
 			this.btnControl = document.createElement('i');
 			this.btnControl.textContent = "pause";
 			this.btnControl.className = "material-icons";
 			this.btnNext = document.createElement('i');
-			this.btnNext.textContent = "skip_next";
+			this.btnNext.textContent = "skip_next";/* navigate_next */
 			this.btnNext.className = "material-icons";
 
 			controller.appendChild(this.btnPrevious);

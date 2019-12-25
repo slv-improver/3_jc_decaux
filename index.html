@@ -22,13 +22,13 @@
   </div>
   
 	<div id="app-wrapper">
-    <!-- map area -->
-		<div id="mapid">
-      
+
+    <div id="mapid">
+      <!-- map area -->
     </div>
 		
-		<!-- booking area -->
 		<form>
+      <!-- booking area -->
       <fieldset id="station">
         <legend>Détails de la station</legend>
 				<p>Adresse : <span id="address"></span></p>
@@ -40,9 +40,9 @@
       </fieldset>
       <div id="canvas-container">  
         <canvas id="canvas">Your browser does not support canvas tag.</canvas>
-        <div class="close">⤬</div>
-        <div id="confirmation" class="material-icons">done</div>
-        <div id="clear" class="material-icons">replay</div>
+        <div id="close" class="material-icons">close</div><!-- cancel -->
+        <div id="confirmation" class="material-icons">done</div><!-- send -->
+        <div id="clear" class="material-icons">refresh</div><!-- replay undo edit -->
       </div>
 		</form>
   </div>

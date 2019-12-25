@@ -10,18 +10,20 @@ class Canvas {
     this.doneBtn = document.getElementById('confirmation');
     this.showCanvas();
     this.onClick();
-    this.showHelper();
     this.eventListener()
   }
-
+  
   showCanvas() {
     document.getElementById('canvas-container').style.display = 'block';
+    this.clear();
+    this.showHelper();
   }
 
   showHelper() {
     this.context.font = '20px serif';
-    this.context.fillText('Veuillez signez et valider', 5, 15);
-    this.context.fillText('pour confirmer la réservation', 10, 30);
+    this.context.fillStyle = "rgba(0, 0, 0, .5)";
+    this.context.fillText('Veuillez signer et valider ✔', 5, 50);
+    this.context.fillText('pour confirmer la réservation', 5, 70);
   }
 
   addClick(x, y, dragging){
@@ -36,7 +38,11 @@ class Canvas {
       this.clickX = new Array();
       this.clickY = new Array();
       this.clickDrag = new Array();
+      this.showHelper();
     });
+    this.doneBtn.addEventListener('click', () => {
+      this.doneBtn = new Storage();
+    })
   }
   clear() {
     this.context.clearRect(

@@ -22,7 +22,7 @@ class Form {
 				
 				this.canvas = new Canvas(document.getElementById("canvas"));
 			} else {
-				// storage
+				new Storage();
 			}
 		});
 	}

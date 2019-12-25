@@ -62,6 +62,7 @@ class Map {
 		document.getElementById('mapid').addEventListener("click", function () {
 			if (document.getElementById('mapid').style.outline === 'none') {
 				document.getElementById('station').style.display = 'none';
+				document.getElementById('canvas-container').style.display = 'none';
 			}
 		});
 	}
