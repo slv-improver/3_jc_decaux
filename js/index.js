@@ -1,6 +1,6 @@
 
 let diapo = new Slider(
-	document.getElementById('sliderWrapper'),
+	document.getElementById('slider-wrapper'),
 	[
 		'people1.jpg',
 		'station3.jpg'

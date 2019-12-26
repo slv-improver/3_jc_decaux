@@ -17,6 +17,7 @@ class Storage {
 			this.getData();
 		}
 	}
+	/* stores data */
 	setData() {
 		sessionStorage.setItem('address', this.address);
 		sessionStorage.setItem('limit', this.timeLimit);
@@ -24,6 +25,7 @@ class Storage {
 		localStorage.setItem('firstname', this.firstname);
 		document.getElementById('booking-app').style.display = 'none';
 	}
+	/* retrieves data */
 	getData() {
 		var infoContainer = document.getElementById('booking-info');
 		this.intervalId = setInterval(() => {

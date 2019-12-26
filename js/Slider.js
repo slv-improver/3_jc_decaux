@@ -12,7 +12,7 @@ class Slider {
 		this.keyupListener();
 	}
 
-	appendSlider() {
+	appendSlider() { /* slider */
 		let figure = document.createElement("figure");
 		this.image = document.createElement("img");
 		this.image.id = "image";
@@ -24,7 +24,7 @@ class Slider {
 		this.slider.appendChild(figure);
 		this.reload();
 
-		if (this.controller) {
+		if (this.controller) { /* btn controller */
 			let controller = document.createElement("div");
 			controller.id = "controller";
 			this.btnPrevious = document.createElement('i');
@@ -50,13 +50,12 @@ class Slider {
 		this.caption.textContent = this.text[this.index];
 	}
 
-	play() {
-		// this.intervalId = setInterval(this.next.bind(this), 5000);
+	play() { /* interval */
 		this.ctrl = 1;
 		this.intervalId = setInterval(() => this.next(), 1000);
 	}
 
-	control() {
+	control() { /* pause / play */
 		if (this.ctrl === 1) {
 			clearInterval(this.intervalId);
 			this.btnControl.textContent = 'play_arrow';
@@ -83,7 +82,7 @@ class Slider {
 		this.reload();
 	}
 
-	keyupListener() {
+	keyupListener() { /* press right, left and shift/control/0 */
 		document.addEventListener('keyup', (e) => {
 			switch (e.keyCode) {
 				case 39:
@@ -104,7 +103,7 @@ class Slider {
 		})
 	}
 
-	btnListener() {
+	btnListener() { /* click on btn controller */
 		this.btnPrevious.addEventListener('click', this.previous.bind(this));
 		this.btnNext.addEventListener('click', this.next.bind(this));
 		this.btnControl.addEventListener('click', this.control.bind(this));

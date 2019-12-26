@@ -16,7 +16,7 @@ class Form {
 		document.getElementById('name').value = localStorage.getItem('name');
 		document.getElementById('firstname').value = localStorage.getItem('firstname');
 		
-		this.bookingListener();
+		this.bookingListener(); /* eventListener on submit */
 	}
 
 	bookingListener() {

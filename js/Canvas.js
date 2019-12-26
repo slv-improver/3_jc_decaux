@@ -13,7 +13,7 @@ class Canvas {
     this.doneBtn = document.getElementById('confirmation');
     this.showCanvas();
     this.onClick();
-    this.eventListener()
+    this.eventListener();
   }
   
   showCanvas() {
@@ -22,7 +22,7 @@ class Canvas {
     this.showHelper();
   }
 
-  showHelper() {
+  showHelper() { /* helper on canvas */
     this.context.font = '20px serif';
     this.context.fillStyle = "rgba(0, 0, 0, .5)";
     this.context.fillText('Veuillez signer et valider ✔', 5, 50);
@@ -35,7 +35,7 @@ class Canvas {
     this.clickDrag.push(dragging);
   }
 
-  eventListener() {
+  eventListener() { /* on canvas' buttons */
     this.clearBtn.addEventListener('click', () => {
       this.clear();
       this.clickX = new Array();
@@ -61,7 +61,7 @@ class Canvas {
   }
 
   draw() {
-    this.clear(); // Clears the canvas
+    this.clear();
 
     this.context.strokeStyle = "#1a74db";
     this.context.lineJoin = "round";
@@ -69,7 +69,7 @@ class Canvas {
 
     for(var i=0; i < this.clickX.length; i++) {
       this.context.beginPath();
-      if(this.clickDrag[i] && i){
+      if(this.clickDrag[i] && i){ /* clickDrag[true] && i>0 */
         this.context.moveTo(this.clickX[i-1], this.clickY[i-1]);
       }else{
         this.context.moveTo(this.clickX[i]-1, this.clickY[i]);
