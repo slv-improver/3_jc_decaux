@@ -18,3 +18,7 @@ let map = new Map(
 	"7b223c89d17e9f045f732705dd821673730331be"
 );
 
+if (sessionStorage.getItem('limit')) {
+	new Storage();
+}
+

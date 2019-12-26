@@ -13,17 +13,33 @@ class Form {
 		document.getElementById('address').textContent = this.address;
 		document.getElementById('places').textContent = this.available_bike_stands;
 		document.getElementById('available').textContent = this.available_bikes;
+		document.getElementById('name').value = localStorage.getItem('name');
+		document.getElementById('firstname').value = localStorage.getItem('firstname');
+		
 		this.bookingListener();
 	}
 
 	bookingListener() {
 		this.submit.addEventListener('click', () => {
+			var name = document.getElementById('name').value;
+			var firstname = document.getElementById('firstname').value;
 			if (this.signature) {
-				
-				this.canvas = new Canvas(document.getElementById("canvas"));
+				this.canvas = new Canvas(
+					document.getElementById("canvas"),
+					this.address,
+					name,
+					firstname,
+					true
+				);
 			} else {
-				new Storage();
+				new Storage(
+					this.address,
+					name,
+					firstname,
+					true
+				);
 			}
 		});
 	}
+	
 }

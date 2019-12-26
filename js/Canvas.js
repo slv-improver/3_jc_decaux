@@ -1,5 +1,8 @@
 class Canvas {
-  constructor(canvas) {
+  constructor(canvas, address, name, firstname) {
+    this.address = address;
+    this.name = name;
+		this.firstname = firstname;
     this.canvas = canvas;
     this.context = this.canvas.getContext('2d');
     this.clickX = new Array();
@@ -41,7 +44,12 @@ class Canvas {
       this.showHelper();
     });
     this.doneBtn.addEventListener('click', () => {
-      this.doneBtn = new Storage();
+      this.doneBtn = new Storage(
+        this.address,
+				this.name,
+        this.firstname,
+        true
+      );
     })
   }
   clear() {

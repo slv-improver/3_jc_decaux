@@ -91,3 +91,16 @@ fieldset {
 }
 
 #mapid{height:500px;width:60%;margin:auto;}
+
+#booking-info {
+	z-index: 1000;
+	display: none;
+	text-align: center;
+	position: fixed;
+	bottom: 0;
+	left: 20%;
+	right: 20%;
+	padding: 10px;
+	background: rgba(0, 0, 0, 0.8);
+	color: white;
+}
