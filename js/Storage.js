@@ -17,15 +17,17 @@ class Storage {
 			this.getData();
 		}
 	}
-	/* stores data */
+	/* storing */
 	setData() {
 		sessionStorage.setItem('address', this.address);
 		sessionStorage.setItem('limit', this.timeLimit);
 		localStorage.setItem('name', this.name);
 		localStorage.setItem('firstname', this.firstname);
-		document.getElementById('booking-app').style.display = 'none';
+		// document.getElementById('booking-app').style.display = 'none'; /* disabling new form */
+		document.getElementById('station').style.display = 'none';
+		document.getElementById('canvas-container').style.display = 'none';
 	}
-	/* retrieves data */
+	/* retrieving */
 	getData() {
 		var infoContainer = document.getElementById('booking-info');
 		this.intervalId = setInterval(() => {
@@ -40,18 +42,25 @@ class Storage {
 				let deadline = (sessionStorage.getItem('limit') - Date.now()) / 1000;
 				let dlMin = Math.trunc(deadline / 60);
 				let dlSec = Math.trunc(deadline - dlMin * 60);
+				if (dlSec < 10) {dlSec = "0" + dlSec};
 				let dlToString = dlMin + ' min ' + dlSec + ' s';
 				timer.innerText = 'Temps restant : ' + dlToString;
 				
 				infoContainer.appendChild(info);
 				infoContainer.appendChild(timer);
+			} else if (!sessionStorage.getItem('limit')) {
+				infoContainer.innerText = 'Nouvelle réservation en cours';
+				infoContainer.style.background =  'rgba(0, 0, 0, 0.8)';
+				infoContainer.style.fontSize =  'initial';
+				infoContainer.style.fontWeight =  'initial';
 			} else {
 				clearInterval(this.intervalId);
 				sessionStorage.removeItem('address');
 				sessionStorage.removeItem('limit');
-				infoContainer.innerText = "La réservation à expirée";
+				infoContainer.innerText = "La réservation a expirée";
 				infoContainer.style.background =  'red';
 				infoContainer.style.fontSize =  '30px';
+				infoContainer.style.fontWeight =  '900';
 			}
 			}, 1000);
 	}

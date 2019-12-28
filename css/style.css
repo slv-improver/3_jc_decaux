@@ -2,19 +2,21 @@
 	border: blue 1px solid;
 } */
 
-#sliderWrapper {
+/* slider */
+
+#slider-wrapper {
 	width: 60%;
 	margin: 20px auto;
 	position: relative;
 }
-#sliderWrapper figure {
+#slider-wrapper figure {
 	position: relative;
 	margin: 0;
 }
-#sliderWrapper img {
+#slider-wrapper img {
 	width: 100%;
 }
-#sliderWrapper figcaption {
+#slider-wrapper figcaption {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -40,18 +42,38 @@
   transform: scale(1.1);
 }
 
+/* app */
+
 #app-wrapper {
   display: flex;
-  padding: 20px;
+  padding: 50px;
 }
 
-fieldset {
+/* map */
+
+#mapid{height:500px;width:60%;margin:auto;}
+
+/* form */
+
+#station {
 	border-radius: 10px;
 	box-shadow: 2px 2px rgba(173, 173, 173, 0.767);
 	width: 300px;
 	display: none;
 	margin: 0 auto;
 }
+#cancel {
+	display: none;
+}
+#alert {
+	color: red;
+	font-size: 20px;
+	font-weight: 900;
+	text-align: center;
+}
+
+/* canvas */
+
 #canvas-container {
   position: relative;
   display: none;
@@ -70,7 +92,7 @@ fieldset {
 
 }
 #canvas-container .material-icons:active {
-  border-style: unset;
+  border-style: none;
 }
 #close {
   top: 25px;
@@ -90,7 +112,7 @@ fieldset {
   cursor: pointer;
 }
 
-#mapid{height:500px;width:60%;margin:auto;}
+/* info */
 
 #booking-info {
 	z-index: 1000;

@@ -4,21 +4,21 @@ class Map {
 		this.blueIcon = L.icon({
 		  iconUrl: 'images/bikeblue.png',
 		  iconSize:     [41.3, 48.5],
-		  iconAnchor:   [20.65, 24.25],
-		  popupAnchor:  [0, -24.25]
+		  iconAnchor:   [20.65, 48.5],
+			popupAnchor:  [0, -24.25]
 		});
 		this.redIcon = L.icon({
 		  iconUrl: 'images/bikered.png',
-		  iconSize:     [41.3, 48.5],
-		  iconAnchor:   [20.65, 24.25],
-		  popupAnchor:  [0, -24.25]
+		  iconSize:     [41.3*0.6, 48.5*0.6],
+		  iconAnchor:   [20.65*0.6, 48.5*0.6],
+		  popupAnchor:  [0, -24.25*0.6]
 		});
 		this.accessToken = accessToken;
 		this.url = "https://api.jcdecaux.com/vls/v1/stations?contract=" + contractName + "&apiKey=" + apiKey;
 		this.addLayer();
 		this.ajaxGet(this.url, this.addMarker.bind(this));
 		this.hiddenForm();
-		this.form;
+		this.myform;
 	}
 	
 	addLayer() { 
@@ -54,17 +54,23 @@ class Map {
 	/* marker and class form */
 	addMarker(response) {
 		let brisbane = JSON.parse(response);
+		var station;
 		brisbane.forEach(element => { /* blueIcon and redIcon */
 			if (element.available_bikes > 0) {
-				var station = L.marker([element.position.lat, element.position.lng], {
-					icon: this.blueIcon}).addTo(this.mymap).bindPopup(element.address);
+				station = L.marker([element.position.lat, element.position.lng], {
+					icon: this.blueIcon,
+					riseOnHover: true
+				}).addTo(this.mymap).bindPopup(element.address);
 			} else {
 				station = L.marker([element.position.lat, element.position.lng], {
 					icon: this.redIcon}).addTo(this.mymap).bindPopup(element.address);
-			} /* instanciation onclick */
-			station.addEventListener('click', function() {
-				this.form = new Form(element, true); 
-			}.bind(this));
+			} 
+			/* instanciation onclick */
+			station.on('click', (e) => {
+				this.myform = new Form(element);
+				console.log('from mymap');
+				this.mymap.setView([e.target._latlng.lat, e.target._latlng.lng]);
+			});
 		});
 	}                                                     
 

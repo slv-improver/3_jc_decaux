@@ -44,12 +44,18 @@ class Canvas {
       this.showHelper();
     });
     this.doneBtn.addEventListener('click', () => {
-      this.doneBtn = new Storage(
+      this.mystorage = new Storage(
         this.address,
 				this.name,
         this.firstname,
         true
       );
+      console.log('from canvas');
+      /* style reset */
+      var infoContainer = document.getElementById('booking-info');
+      infoContainer.style.background =  'rgba(0, 0, 0, 0.8)';
+      infoContainer.style.fontSize =  'unset';
+      infoContainer.style.fontWeight =  'unset';
     })
   }
   clear() {
@@ -65,7 +71,7 @@ class Canvas {
 
     this.context.strokeStyle = "#1a74db";
     this.context.lineJoin = "round";
-    this.context.lineWidth = 4;
+    this.context.lineWidth = 2;
 
     for(var i=0; i < this.clickX.length; i++) {
       this.context.beginPath();
