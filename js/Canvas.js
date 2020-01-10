@@ -1,8 +1,5 @@
 class Canvas {
-  constructor(canvas, address, name, firstname) {
-    this.address = address;
-    this.name = name;
-		this.firstname = firstname;
+  constructor(canvas) {
     this.canvas = canvas;
     this.context = this.canvas.getContext('2d');
     this.clickX = new Array();
@@ -45,12 +42,9 @@ class Canvas {
     });
     this.doneBtn.addEventListener('click', () => {
       this.mystorage = new Storage(
-        this.address,
-				this.name,
-        this.firstname,
-        true
+        true,
+        0.3
       );
-      console.log('from canvas');
       /* style reset */
       var infoContainer = document.getElementById('booking-info');
       infoContainer.style.background =  'rgba(0, 0, 0, 0.8)';

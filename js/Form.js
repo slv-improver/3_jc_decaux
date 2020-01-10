@@ -1,8 +1,6 @@
 class Form {
-	constructor(element) {
-		this.address = element.address;
-		this.available_bike_stands = element.available_bike_stands;
-		this.available_bikes = element.available_bikes;
+	constructor() {
+		this.section = document.getElementById('booking-section');
 		this.alert = document.getElementById('alert');
 		this.cancel = document.getElementById('cancel');
 		this.submit = document.getElementById('booking');
@@ -12,19 +10,16 @@ class Form {
 	}
 
 	showForm() {
-		document.getElementById('station').style.display = 'block';
-		document.getElementById('address').textContent = this.address;
-		document.getElementById('places').textContent = this.available_bike_stands;
-		document.getElementById('available').textContent = this.available_bikes;
+		
+		this.section.style.display = 'initial';
 		document.getElementById('name').value = localStorage.getItem('name');
 		document.getElementById('firstname').value = localStorage.getItem('firstname');
- 
 	}
 
 	bookingListener() {
 		this.submit.addEventListener('click', () => {
-			var name = document.getElementById('name').value;
-			var firstname = document.getElementById('firstname').value;
+			let name = document.getElementById('name').value;
+			let firstname = document.getElementById('firstname').value;
 			if (name && firstname && !sessionStorage.getItem('limit')) {
 				this.mycanvas = new Canvas(
 					document.getElementById("canvas"),
@@ -36,7 +31,7 @@ class Form {
 			} else if (!(name && firstname)) {
 				this.alert.innerText = "Veuillez renseigner vos nom et prénom pour réserver !";
 				setTimeout(() => {
-					this.reset();
+					this.resetAlert();
 					this.cancel.style.display = 'initial';
 				}, 5000);
 			} else if (sessionStorage.getItem('limit')) {
@@ -47,7 +42,7 @@ class Form {
 					this.newSubmit = true;
 					console.log(this.newSubmit, 'from ');
 					this.cancel.addEventListener('click', () => {
-						this.reset();
+						this.resetAlert();
 						this.newSubmit = false;
 						console.log('from cancel');
 					})
@@ -62,12 +57,19 @@ class Form {
 					// 	firstname
 					// );
 					console.log(this.newSubmit, 'from newsubmit');
-					this.reset();
+					this.resetAlert();
 				}
 			}
 		});
 	}
-	reset() { /* style management */
+	resetForm() {
+		this.section.style.display = 'none';
+		// this.submit.value
+	}
+	resetCanvas() {
+
+	}
+	resetAlert() { /* style management */
 		this.cancel.style.display = "none";
 		this.submit.value = 'Réserver';
 		this.alert.innerText = '';

@@ -1,8 +1,5 @@
 class Storage {
-	constructor(address=null, name=null, firstname=null, set=false, timeLimit=0.1) {
-		this.address = address;
-		this.name = name;
-		this.firstname = firstname;
+	constructor(set=false, timeLimit=20) {
 		this.set = set;
 		this.timeLimit = Date.now() + timeLimit * 60 * 1000;
 		this.intervalId;

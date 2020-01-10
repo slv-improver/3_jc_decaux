@@ -51,7 +51,7 @@
 
 /* map */
 
-#mapid{height:500px;width:60%;margin:auto;}
+#mapid{height:500px;width:80%;margin:auto;}
 
 /* form */
 
@@ -61,6 +61,9 @@
 	width: 300px;
 	display: none;
 	margin: 0 auto;
+}
+#booking-section {
+	display: none;
 }
 #cancel {
 	display: none;

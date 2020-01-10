@@ -2,12 +2,16 @@
 class Slider {
 	constructor(slider, url, text, controller=false) {
 		this.index = 0;
-		this.ctrl = 0;
+		this.ctrl = false;
 		this.slider =  slider;
 		this.url = url;
 		this.text = text;
 		this.controller = controller;
 		this.appendSlider();
+		if (this.controller) { /* btn controller */
+			this.createControler();
+			this.btnListener();
+		}
 		this.play();
 		this.keyupListener();
 	}
@@ -22,45 +26,25 @@ class Slider {
 		figure.appendChild(this.image);
 		figure.appendChild(this.caption);
 		this.slider.appendChild(figure);
-		this.reload();
-
-		if (this.controller) { /* btn controller */
-			let controller = document.createElement("div");
-			controller.id = "controller";
-			this.btnPrevious = document.createElement('i');
-			this.btnPrevious.textContent = "skip_previous";/* navigate_before */
-			this.btnPrevious.className = "material-icons";
-			this.btnControl = document.createElement('i');
-			this.btnControl.textContent = "pause";
-			this.btnControl.className = "material-icons";
-			this.btnNext = document.createElement('i');
-			this.btnNext.textContent = "skip_next";/* navigate_next */
-			this.btnNext.className = "material-icons";
-
-			controller.appendChild(this.btnPrevious);
-			controller.appendChild(this.btnControl);
-			controller.appendChild(this.btnNext);
-			this.slider.appendChild(controller);
-			this.btnListener();
-		}
+		this.reloadSlider();
 	}
 
-	reload() {
-		this.image.src = 'images/' + this.url[this.index];
+	reloadSlider() {
+		this.image.src = `images/${this.url[this.index]}`;
 		this.caption.textContent = this.text[this.index];
 	}
 
 	play() { /* interval */
-		this.ctrl = 1;
+		this.ctrl = true;
 		this.intervalId = setInterval(() => this.next(), 1000);
 	}
 
 	control() { /* pause / play */
-		if (this.ctrl === 1) {
+		if (this.ctrl === true) {
 			clearInterval(this.intervalId);
 			this.btnControl.textContent = 'play_arrow';
-			this.ctrl = 0;
-		} else if (this.ctrl === 0) {
+			this.ctrl = false;
+		} else if (this.ctrl === false) {
 			this.play();
 			this.btnControl.textContent = 'pause';
 		}
@@ -71,7 +55,7 @@ class Slider {
 		if (this.index >= this.url.length) {
 			this.index = 0;
 		}
-		this.reload();
+		this.reloadSlider();
 	}
 
 	previous() {
@@ -79,7 +63,7 @@ class Slider {
 		if (this.index < 0) {
 			this.index = this.url.length - 1;
 		}
-		this.reload();
+		this.reloadSlider();
 	}
 
 	keyupListener() { /* press right, left and shift/control/0 */
@@ -103,6 +87,25 @@ class Slider {
 		})
 	}
 
+	createControler() {
+		let controller = document.createElement("div");
+		controller.id = "controller";
+		this.btnPrevious = document.createElement('i');
+		this.btnPrevious.textContent = "skip_previous";/* navigate_before */
+		this.btnPrevious.className = "material-icons";
+		this.btnControl = document.createElement('i');
+		this.btnControl.textContent = "pause";
+		this.btnControl.className = "material-icons";
+		this.btnNext = document.createElement('i');
+		this.btnNext.textContent = "skip_next";/* navigate_next */
+		this.btnNext.className = "material-icons";
+	
+		controller.appendChild(this.btnPrevious);
+		controller.appendChild(this.btnControl);
+		controller.appendChild(this.btnNext);
+		this.slider.appendChild(controller);
+	}
+	
 	btnListener() { /* click on btn controller */
 		this.btnPrevious.addEventListener('click', this.previous.bind(this));
 		this.btnNext.addEventListener('click', this.next.bind(this));

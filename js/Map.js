@@ -1,28 +1,30 @@
 class Map {
-	constructor(accessToken, contractName, apiKey) {
+	constructor(accessToken, contractName, apiKey, customerInfo=false, canvas=false) {
 		this.mymap = L.map('mapid').setView([-27.475573, 153.024134], 13);
 		this.blueIcon = L.icon({
 		  iconUrl: 'images/bikeblue.png',
 		  iconSize:     [41.3, 48.5],
 		  iconAnchor:   [20.65, 48.5],
-			popupAnchor:  [0, -24.25]
+			popupAnchor:  [0, -48.5]
 		});
 		this.redIcon = L.icon({
 		  iconUrl: 'images/bikered.png',
 		  iconSize:     [41.3*0.6, 48.5*0.6],
 		  iconAnchor:   [20.65*0.6, 48.5*0.6],
-		  popupAnchor:  [0, -24.25*0.6]
+		  popupAnchor:  [0, -48.5*0.6]
 		});
 		this.accessToken = accessToken;
-		this.url = "https://api.jcdecaux.com/vls/v1/stations?contract=" + contractName + "&apiKey=" + apiKey;
+		this.url = `https://api.jcdecaux.com/vls/v1/stations?contract=${contractName}&apiKey=${apiKey}`;
 		this.addLayer();
 		this.ajaxGet(this.url, this.addMarker.bind(this));
-		this.hiddenForm();
-		this.myform;
+		this.hiddenDetailsOnMapClick();
+		this.booking = document.getElementById('booking')
+		if (customerInfo) {this.form()};
+		if (canvas) {this.canvas()}
 	}
 	
 	addLayer() { 
-		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + this.accessToken, {
+		L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${this.accessToken}`, {
 		  maxZoom: 20,
 		  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
 			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -35,53 +37,83 @@ class Map {
 
 	/* API */
 	ajaxGet(url, callback) {
-		var req = new XMLHttpRequest();
+		let req = new XMLHttpRequest();
 		req.open("GET", url);
 		req.addEventListener("load", function () {
       // req.onreadystatechange = function () {if this.readyState == 4} // 4 == XMLHttpRequest.DONE
       if (200 <= req.status && req.status < 400) {
-        callback(req.responseText);
+        callback(JSON.parse(req.responseText));
       } else {
-        console.error(req.status + " " + req.statusText + " " + url);
+        console.error(`${req.status} ${req.statusText} ${url}`);
       }
     });
     req.addEventListener("error", function () {
-      console.error("Erreur réseau avec l'URL " + url);
+      console.error(`Erreur réseau avec l'URL ${url}`);
     });
     req.send(null);
 	}
 
 	/* marker and class form */
 	addMarker(response) {
-		let brisbane = JSON.parse(response);
-		var station;
-		brisbane.forEach(element => { /* blueIcon and redIcon */
+		let stations = new L.markerClusterGroup();
+		let station;
+		response.forEach(element => { /* blueIcon and redIcon */
 			if (element.available_bikes > 0) {
 				station = L.marker([element.position.lat, element.position.lng], {
 					icon: this.blueIcon,
 					riseOnHover: true
-				}).addTo(this.mymap).bindPopup(element.address);
+				});
 			} else {
 				station = L.marker([element.position.lat, element.position.lng], {
-					icon: this.redIcon}).addTo(this.mymap).bindPopup(element.address);
-			} 
-			/* instanciation onclick */
-			station.on('click', (e) => {
-				this.myform = new Form(element);
-				console.log('from mymap');
+					icon: this.redIcon});
+			}
+			station.bindPopup(element.status==="OPEN"?"Ouverte":"Fermée").on('click', (e) => {
+				this.displayDetails(element);
 				this.mymap.setView([e.target._latlng.lat, e.target._latlng.lng]);
 			});
+			stations.addLayer(station);
 		});
-	}                                                     
+		this.mymap.addLayer(stations);
+	}
+
+	displayDetails(station) {
+		document.getElementById('station').style.display = 'initial';
+		document.getElementById('address').textContent = station.address;
+		document.getElementById('places').textContent = station.available_bike_stands;
+		document.getElementById('available').textContent = station.available_bikes;
+	}
 
 	/* hidden station details */
-	hiddenForm() {
-		document.getElementById('mapid').addEventListener("click", function () {
-			if (document.getElementById('mapid').style.outline === 'none') {
-				document.getElementById('station').style.display = 'none';
-				document.getElementById('canvas-container').style.display = 'none';
-			}
+	hiddenDetailsOnMapClick() {
+		this.mymap.addEventListener("click", function () {
+			document.getElementById('station').style.display = 'none';
+			document.getElementById('canvas-container').style.display = 'none';
 		});
+	}
+
+	createButton(id, value='') {
+		let input = document.createElement('input');
+		input.type = 'button';
+		input.id = id;
+		input.value = value;
+		return input;
+	}
+
+	form() {
+		this.booking.addEventListener('click', (e) => {
+			new Form();
+			e.target.value = 'Réserver';
+		})
+	}
+
+	canvas() {
+
 	}
 }
 
+			// /* instanciation onclick */
+			// station.on('click', (e) => {
+			// 	this.myform = new Form(element);
+			// 	console.log('from mymap');
+			// 	
+			// });
