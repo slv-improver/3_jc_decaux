@@ -1,22 +1,33 @@
 class Canvas {
-  constructor(canvas) {
+  constructor(container, canvas) {
+    this.container = container
     this.canvas = canvas;
     this.context = this.canvas.getContext('2d');
     this.clickX = new Array();
     this.clickY = new Array();
     this.clickDrag = new Array();
     this.paint;
-    this.clearBtn = document.getElementById('clear');
     this.doneBtn = document.getElementById('confirmation');
+    this.clearBtn = document.getElementById('clear');
     this.showCanvas();
     this.onClick();
-    this.eventListener();
+    this.clearListener();
+    this.aa();
   }
   
   showCanvas() {
-    document.getElementById('canvas-container').style.display = 'block';
+    this.container.style.display = 'block';
+    this.doneBtn.textContent = '';
     this.clear();
     this.showHelper();
+  }
+  aa() {
+    this.canvas.addEventListener('mousemove', () => {
+      if (this.clickX.length === 30) {
+        this.createDoneBtn();
+        this.doneListener();
+      }
+    })
   }
 
   showHelper() { /* helper on canvas */
@@ -26,24 +37,14 @@ class Canvas {
     this.context.fillText('pour confirmer la réservation', 5, 70);
   }
 
-  addClick(x, y, dragging){
-    this.clickX.push(x);
-    this.clickY.push(y);
-    this.clickDrag.push(dragging);
+  createDoneBtn() {
+    this.doneBtn.innerText = "done";
   }
-
-  eventListener() { /* on canvas' buttons */
-    this.clearBtn.addEventListener('click', () => {
-      this.clear();
-      this.clickX = new Array();
-      this.clickY = new Array();
-      this.clickDrag = new Array();
-      this.showHelper();
-    });
+  doneListener() {
     this.doneBtn.addEventListener('click', () => {
       this.mystorage = new Storage(
         true,
-        0.3
+        20
       );
       /* style reset */
       var infoContainer = document.getElementById('booking-info');
@@ -52,6 +53,16 @@ class Canvas {
       infoContainer.style.fontWeight =  'unset';
     })
   }
+  
+  clearListener() { /* on canvas' buttons */
+    this.clearBtn.addEventListener('click', () => {
+      this.clear();
+      this.clickX = new Array();
+      this.clickY = new Array();
+      this.clickDrag = new Array();
+      this.showHelper();
+    });
+  }
   clear() {
     this.context.clearRect(
       0, 0,
@@ -59,14 +70,20 @@ class Canvas {
       this.context.canvas.height
     );
   }
-
+  
+  addClick(x, y, dragging){
+    this.clickX.push(x);
+    this.clickY.push(y);
+    this.clickDrag.push(dragging);
+  }
+  
   draw() {
     this.clear();
-
+    
     this.context.strokeStyle = "#1a74db";
     this.context.lineJoin = "round";
     this.context.lineWidth = 2;
-
+    
     for(var i=0; i < this.clickX.length; i++) {
       this.context.beginPath();
       if(this.clickDrag[i] && i){ /* clickDrag[true] && i>0 */
@@ -79,8 +96,8 @@ class Canvas {
       this.context.stroke();
     }
   }
-
-  onClick() {
+  
+  onClick() { /* eventListener to draw function */
     var mainThis = this;
     $('#canvas').mousedown(function(e){
       mainThis.paint = true;

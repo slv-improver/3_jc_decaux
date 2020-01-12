@@ -1,31 +1,36 @@
 class Map {
-	constructor(accessToken, contractName, apiKey, customerInfo=false, canvas=false) {
-		this.mymap = L.map('mapid').setView([-27.475573, 153.024134], 13);
+	constructor(id, accessToken, contractName, apiKey, customerInfo=false, canvas=false) {
+		this.mymap = L.map(id, {
+			doubleClickZoom: false
+		}).setView([-27.475573, 153.024134], 13);
+		let iconWidth = 42*0.8;
+		let iconHeight = 50	*0.8;
 		this.blueIcon = L.icon({
 		  iconUrl: 'images/bikeblue.png',
-		  iconSize:     [41.3, 48.5],
-		  iconAnchor:   [20.65, 48.5],
-			popupAnchor:  [0, -48.5]
+		  iconSize:     [iconWidth, iconHeight],
+		  iconAnchor:   [iconWidth/2, iconHeight],
+			popupAnchor:  [0, -iconHeight]
 		});
 		this.redIcon = L.icon({
 		  iconUrl: 'images/bikered.png',
-		  iconSize:     [41.3*0.6, 48.5*0.6],
-		  iconAnchor:   [20.65*0.6, 48.5*0.6],
-		  popupAnchor:  [0, -48.5*0.6]
+		  iconSize:     [iconWidth*0.6, iconHeight*0.6],
+		  iconAnchor:   [iconWidth*0.3, iconHeight*0.6],
+		  popupAnchor:  [0, -iconHeight*0.6]
 		});
-		this.accessToken = accessToken;
-		this.url = `https://api.jcdecaux.com/vls/v1/stations?contract=${contractName}&apiKey=${apiKey}`;
+		this.mapboxUrl = `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${accessToken}`;
+		this.jcdecauxUrl = `https://api.jcdecaux.com/vls/v1/stations?contract=${contractName}&apiKey=${apiKey}`;
 		this.addLayer();
-		this.ajaxGet(this.url, this.addMarker.bind(this));
+		this.ajaxGet(this.jcdecauxUrl, this.addMarker.bind(this));
 		this.hiddenDetailsOnMapClick();
-		this.booking = document.getElementById('booking')
-		if (customerInfo) {this.form()};
-		if (canvas) {this.canvas()}
+		this.fieldset = document.getElementById('station');
+		this.choice = document.getElementById('station-choice');
+		if (customerInfo) {this.formInstantiation()};
+		if (canvas) {}
 	}
 	
 	addLayer() { 
-		L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${this.accessToken}`, {
-		  maxZoom: 20,
+		L.tileLayer(this.mapboxUrl, {
+			maxZoom: 20,
 		  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
 			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
 			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -60,8 +65,7 @@ class Map {
 		response.forEach(element => { /* blueIcon and redIcon */
 			if (element.available_bikes > 0) {
 				station = L.marker([element.position.lat, element.position.lng], {
-					icon: this.blueIcon,
-					riseOnHover: true
+					icon: this.blueIcon
 				});
 			} else {
 				station = L.marker([element.position.lat, element.position.lng], {
@@ -77,43 +81,36 @@ class Map {
 	}
 
 	displayDetails(station) {
-		document.getElementById('station').style.display = 'initial';
+		this.fieldset.style.display = 'initial';
 		document.getElementById('address').textContent = station.address;
 		document.getElementById('places').textContent = station.available_bike_stands;
 		document.getElementById('available').textContent = station.available_bikes;
+		if (station.available_bikes) {
+			this.choice.style.display = 'initial';
+		} else {
+			this.choice.style.display = 'none';
+		}
+		this.hiddenObjects();
+	}
+
+	hiddenObjects() {
+		document.getElementById('booking-section').style.display = 'none';
+		document.getElementById('canvas-container').style.display = 'none';
 	}
 
 	/* hidden station details */
 	hiddenDetailsOnMapClick() {
-		this.mymap.addEventListener("click", function () {
-			document.getElementById('station').style.display = 'none';
-			document.getElementById('canvas-container').style.display = 'none';
+		this.mymap.addEventListener("click", () => {
+			this.fieldset.style.display = 'none';
+			this.hiddenObjects();
 		});
 	}
-
-	createButton(id, value='') {
-		let input = document.createElement('input');
-		input.type = 'button';
-		input.id = id;
-		input.value = value;
-		return input;
-	}
-
-	form() {
-		this.booking.addEventListener('click', (e) => {
+	
+	formInstantiation() {
+		this.choice.addEventListener('click', () => {
 			new Form();
-			e.target.value = 'Réserver';
-		})
-	}
-
-	canvas() {
-
+			sessionStorage.setItem('station', document.getElementById('address').textContent);
+			this.choice.style.display = 'none';
+		});
 	}
 }
-
-			// /* instanciation onclick */
-			// station.on('click', (e) => {
-			// 	this.myform = new Form(element);
-			// 	console.log('from mymap');
-			// 	
-			// });

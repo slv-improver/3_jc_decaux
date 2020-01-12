@@ -32,22 +32,25 @@
 		<form id="booking-app">
       <!-- booking area -->
 			<fieldset id="station">
-			<legend>Détails de la station</legend>
-				<p>Adresse : <span id="address"></span></p>
-				<p><span id="places"></span> places</p>
-				<p><span id="available"></span> vélos disponibles</p>
+				<legend>Détails de la station</legend>
+				<div id="station-info">
+					<p>Adresse : <span id="address"></span></p>
+					<p><span id="places"></span> places</p>
+					<p><span id="available"></span> vélos disponibles</p>
+					<input type="button" value="Choisir" id="station-choice">
+				</div>
 				<div id="booking-section">
 					<p><label for="name">Nom : <input type="text" id="name"></label></p>
 					<p><label for="firstname">Prénom : <input type="text" id="firstname"></label></p>
+					<p id="submit"></p>
 				</div>
-				<p><input type="button" value="Abandonner" id="cancel"><input type="button" value="" id="booking"></p>
 			</fieldset>
-				<p id="alert"></p>
-				<div id="canvas-container">
+			<p id="alert"></p>
+			<div id="canvas-container">
         <canvas id="canvas">Your browser does not support canvas tag.</canvas>
         <div id="close" class="material-icons">close</div><!-- cancel -->
-        <div id="confirmation" class="material-icons">done</div><!-- send -->
-        <div id="clear" class="material-icons">refresh</div><!-- replay undo edit -->
+        <div id="confirmation" class="material-icons"></div>
+        <div id="clear" class="material-icons">replay</div><!-- replay undo edit refresh -->
       </div>
 		</form>
 

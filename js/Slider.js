@@ -9,7 +9,7 @@ class Slider {
 		this.controller = controller;
 		this.appendSlider();
 		if (this.controller) { /* btn controller */
-			this.createControler();
+			this.appendControler();
 			this.btnListener();
 		}
 		this.play();
@@ -36,7 +36,7 @@ class Slider {
 
 	play() { /* interval */
 		this.ctrl = true;
-		this.intervalId = setInterval(() => this.next(), 1000);
+		this.intervalId = setInterval(() => this.next(), 5000);
 	}
 
 	control() { /* pause / play */
@@ -87,7 +87,7 @@ class Slider {
 		})
 	}
 
-	createControler() {
+	appendControler() {
 		let controller = document.createElement("div");
 		controller.id = "controller";
 		this.btnPrevious = document.createElement('i');
