@@ -41,6 +41,9 @@
 #controller .material-icons:hover {
   transform: scale(1.1);
 }
+#controller .material-icons:active {
+  transform: scale(1);
+}
 
 /* app */
 
