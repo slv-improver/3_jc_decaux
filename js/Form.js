@@ -1,7 +1,7 @@
 class Form {
 	constructor() {
 		this.bookingSection = document.getElementById('booking-section');
-		this.submit = document.getElementById('submit');
+		this.submitParent = document.getElementById('submit');
 		this.alert = document.getElementById('alert');
 		this.cancel = document.getElementById('cancel');
 		this.newSubmit = false;
@@ -22,8 +22,8 @@ class Form {
 		this.submit.value = 'Réserver';
 		this.submit.id = 'booking';
 
-		this.submit.innerText = '';
-		this.submit.appendChild(this.submit);
+		this.submitParent.innerText = '';
+		this.submitParent.appendChild(this.submit);
 	}
 
 	bookingListener() {
