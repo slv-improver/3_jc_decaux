@@ -1,6 +1,6 @@
 class Canvas {
   constructor(container, canvas) {
-    this.container = container
+    this.container = container;
     this.canvas = canvas;
     this.context = this.canvas.getContext('2d');
     this.clickX = new Array();

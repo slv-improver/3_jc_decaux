@@ -3,8 +3,6 @@ class Form {
 		this.bookingSection = document.getElementById('booking-section');
 		this.submitParent = document.getElementById('submit');
 		this.alert = document.getElementById('alert');
-		this.cancel = document.getElementById('cancel');
-		this.newSubmit = false;
 		this.showForm();
 		this.bookingListener();
 	}
@@ -25,7 +23,6 @@ class Form {
 		this.submitParent.innerText = '';
 		this.submitParent.appendChild(this.submit);
 	}
-
 	bookingListener() {
 		this.submit.addEventListener('click', () => {
 			let name = document.getElementById('name').value;
@@ -33,55 +30,28 @@ class Form {
 			if (name && firstname && !sessionStorage.getItem('limit')) {
 				localStorage.setItem('name', name);
 				localStorage.setItem('firstname', firstname);
+				sessionStorage.setItem('station', document.getElementById('address').textContent);
 				this.canvasInstantiation();
 			} else if (!(name && firstname)) {
 				this.alertInput();
 			} else if (sessionStorage.getItem('limit')) {
-				if (!this.newSubmit) {
-					this.alert.innerText = "Une réservation est en cours. Veuillez l'annuler";
-					this.submit.value = "Réserver à nouveau";
-					this.newSubmit = true;
-					console.log(this.newSubmit, 'from ');
-					// this.cancel.addEventListener('click', () => {
-					// 	this.resetAlert();
-					// 	this.newSubmit = false;
-					// 	console.log('from cancel');
-					// });
-				} else {
-					sessionStorage.clear();
-					this.newSubmit = false;
-					this.canvasInstantiation();
-					console.log(this.newSubmit, 'from newsubmit');
-					this.resetAlert();
-				}
+				this.manageAlert("Une réservation est en cours. Veuillez l'annuler");
 			}
-		});
+		})
 	}
-	alertInput() {
-		this.alert.innerText = "Veuillez renseigner vos nom et prénom pour réserver !";
+
+	manageAlert(text) {
+		this.alert.innerText = text;
 		setTimeout(() => {
-			this.resetAlert();
-			this.cancel.style.display = 'initial';
+			this.alert.innerText = '';
 		}, 5000);
 	}
-	resetForm() {
-		this.bookingSection.style.display = 'none';
-		// this.submit.value
-	}
-	resetCanvas() {
 
-	}
-	resetAlert() { /* style management */
-		// this.cancel.style.display = "none";
-		this.submit.value = 'Réserver';
-		this.alert.innerText = '';
-	}
 	canvasInstantiation() {
 		new Canvas(
 			document.getElementById("canvas-container"),
 			document.getElementById("canvas")
 		);
 		this.submit.style.display = 'none';
-		console.log('from myform');
 	}
 }

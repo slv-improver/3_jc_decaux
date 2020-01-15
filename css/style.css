@@ -26,7 +26,8 @@
 	border-radius: 10px;
 }
 #controller {
-	text-align: center;
+	display: flex;
+    justify-content: space-evenly;
 }
 #controller .material-icons {
   color: white;

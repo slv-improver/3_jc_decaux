@@ -4,20 +4,17 @@ class Storage {
 		this.timeLimit = Date.now() + timeLimit * 60 * 1000;
 		this.intervalId;
 		this.infoContainer = document.getElementById('booking-info');
-		this.data();
-	}
-
-	data() {
 		if (this.set) {
-			this.setData();
+			sessionStorage.setItem('limit', this.timeLimit);
+			this.hiddenBookingApp();
 			this.getData();
 		} else {
 			this.getData();
 		}
 	}
+
 	/* storing */
-	setData() {
-		sessionStorage.setItem('limit', this.timeLimit);
+	hiddenBookingApp() {
 		// document.getElementById('booking-app').style.display = 'none'; /* disabling new form */
 		document.getElementById('station').style.display = 'none';
 		document.getElementById('canvas-container').style.display = 'none';

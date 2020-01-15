@@ -108,9 +108,8 @@ class Map {
 	
 	formInstantiation() {
 		this.choice.addEventListener('click', () => {
-			new Form();
-			sessionStorage.setItem('station', document.getElementById('address').textContent);
-			this.choice.style.display = 'none';
+				new Form();
+				this.choice.style.display = 'none';
 		});
 	}
 }

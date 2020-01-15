@@ -1,11 +1,12 @@
 
 class Slider {
-	constructor(slider, url, text, controller=false) {
+	constructor(slider, slides, controller=false) {
 		this.index = 0;
 		this.ctrl = false;
 		this.slider =  slider;
-		this.url = url;
-		this.text = text;
+		// this.slides = slides;
+		this.url = Object.keys(slides);
+		this.text = Object.values(slides);
 		this.controller = controller;
 		this.appendSlider();
 		if (this.controller) { /* btn controller */

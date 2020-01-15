@@ -1,23 +1,14 @@
 class App {
 	constructor() {
 		this.mySlider = new Slider(
-			document.getElementById('slider-wrapper'),
-			[
-				'people1.jpg',
-				'1chooseStation.png',
-				'2customerInfos.png',
-				'3signature.png',
-				'4twentyMin.png',
-				'station3.jpg'
-			],
-			[
-				'Bienvenue à : EnRoute, EnLigne',
-				'Choisissez votre station',
-				'Renseignez vos nom et prénom',
-				'Signez dans l\'encadré',
-				'Votre réservation est effective pour une durée de 20 min',
-				'Venez prendre votre vélo à la station'
-			],
+			document.getElementById('slider-wrapper'), {
+				'people1.jpg': 'Bienvenue à : EnRoute, EnLigne',
+				'1chooseStation.png': 'Choisissez votre station',
+				'2customerInfos.png': 'Renseignez vos nom et prénom',
+				'3signature.png': 'Signez dans l\'encadré',
+				'4twentyMin.png': 'Votre réservation est effective pour une durée de 20 min',
+				'station3.jpg': 'Venez prendre votre vélo à la station'
+			},
 			true /* controller */
 		);
 		this.myMap = new Map(
@@ -28,18 +19,14 @@ class App {
 			true,
 			true
 		);
-		// this.myForm = new Form();
-		// this.myCanvas = new Canvas(
-		// 	document.getElementById("canvas"),
-		// );
+		
 		if (sessionStorage.getItem('limit')) {
 			new Storage();
 		}
 	}
 }
 
-let myApp = new App();
-
+new App();
 
 /* 
 fonction
