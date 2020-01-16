@@ -1,4 +1,4 @@
-class Storage {
+class BookingInfo {
 	constructor(set=false, timeLimit=20) {
 		this.set = set;
 		this.timeLimit = Date.now() + timeLimit * 60 * 1000;

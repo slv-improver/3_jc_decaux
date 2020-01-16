@@ -12,7 +12,7 @@ class Canvas {
     this.showCanvas();
     this.onClick();
     this.clearListener();
-    this.aa();
+    this.createDoneBtn();
   }
   
   showCanvas() {
@@ -21,10 +21,10 @@ class Canvas {
     this.clear();
     this.showHelper();
   }
-  aa() {
+  createDoneBtn() {
     this.canvas.addEventListener('mousemove', () => {
       if (this.clickX.length === 30) {
-        this.createDoneBtn();
+        this.doneBtn.innerText = "done";
         this.doneListener();
       }
     })
@@ -37,15 +37,13 @@ class Canvas {
     this.context.fillText('pour confirmer la réservation', 5, 70);
   }
 
-  createDoneBtn() {
-    this.doneBtn.innerText = "done";
-  }
   doneListener() {
     this.doneBtn.addEventListener('click', () => {
-      this.mystorage = new Storage(
+      this.myBooking = new BookingInfo(
         true,
         20
       );
+      console.log('booking instance / canvas.js / donelistener');
       /* style reset */
       var infoContainer = document.getElementById('booking-info');
       infoContainer.style.background =  'rgba(0, 0, 0, 0.8)';

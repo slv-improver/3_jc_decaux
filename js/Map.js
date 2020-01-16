@@ -21,7 +21,7 @@ class Map {
 		this.jcdecauxUrl = `https://api.jcdecaux.com/vls/v1/stations?contract=${contractName}&apiKey=${apiKey}`;
 		this.addLayer();
 		this.ajaxGet(this.jcdecauxUrl, this.addMarker.bind(this));
-		this.hiddenDetailsOnMapClick();
+		this.hideDetailsOnMapClick();
 		this.fieldset = document.getElementById('station');
 		this.choice = document.getElementById('station-choice');
 		if (customerInfo) {this.formInstantiation()};
@@ -60,7 +60,9 @@ class Map {
 
 	/* marker and class form */
 	addMarker(response) {
-		let stations = new L.markerClusterGroup();
+		let stations = new L.markerClusterGroup({
+			maxClusterRadius: 50
+		});
 		let station;
 		response.forEach(element => { /* blueIcon and redIcon */
 			if (element.available_bikes > 0) {
@@ -90,25 +92,26 @@ class Map {
 		} else {
 			this.choice.style.display = 'none';
 		}
-		this.hiddenObjects();
+		this.hideObjects();
 	}
 
-	hiddenObjects() {
+	hideObjects() {
 		document.getElementById('booking-section').style.display = 'none';
 		document.getElementById('canvas-container').style.display = 'none';
 	}
 
 	/* hidden station details */
-	hiddenDetailsOnMapClick() {
+	hideDetailsOnMapClick() {
 		this.mymap.addEventListener("click", () => {
 			this.fieldset.style.display = 'none';
-			this.hiddenObjects();
+			this.hideObjects();
 		});
 	}
 	
 	formInstantiation() {
 		this.choice.addEventListener('click', () => {
 				new Form();
+				console.log('form instance / map.js / formInstantiation');
 				this.choice.style.display = 'none';
 		});
 	}
