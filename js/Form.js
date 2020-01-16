@@ -52,6 +52,7 @@ class Form {
 			document.getElementById("canvas-container"),
 			document.getElementById("canvas")
 		);
+		console.log('canvas instance / form.js / canvasInstantiation');
 		this.submit.style.display = 'none';
 	}
 }

@@ -1,7 +1,8 @@
 class App {
 	constructor() {
 		this.mySlider = new Slider(
-			document.getElementById('slider-wrapper'), {
+			document.getElementById('slider-wrapper'),
+			{
 				'people1.jpg': 'Bienvenue à : EnRoute, EnLigne',
 				'1chooseStation.png': 'Choisissez votre station',
 				'2customerInfos.png': 'Renseignez vos nom et prénom',
@@ -19,9 +20,9 @@ class App {
 			true,
 			true
 		);
-		
+
 		if (sessionStorage.getItem('limit')) {
-			new Storage();
+			new BookingInfo();
 		}
 	}
 }
