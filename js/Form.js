@@ -1,10 +1,19 @@
 class Form {
-	constructor() {
+	constructor(stationBtn) {
 		this.bookingSection = document.getElementById('booking-section');
+		this.stationBtn = stationBtn;
 		this.submitParent = document.getElementById('submit');
+		this.submit;
 		this.alert = document.getElementById('alert');
-		this.showForm();
-		this.bookingListener();
+		this.complete = false;
+		this.stationBtnListener();
+	}
+
+	stationBtnListener() {
+		this.stationBtn.addEventListener('click', () => {
+			this.showForm();
+			document.getElementById('station-choice').style.display = 'none';
+		});
 	}
 
 	showForm() {
@@ -12,6 +21,7 @@ class Form {
 		document.getElementById('name').value = localStorage.getItem('name');
 		document.getElementById('firstname').value = localStorage.getItem('firstname');
 		this.addSubmitBtn();
+		this.formListener();
 	}
 
 	addSubmitBtn() {
@@ -23,17 +33,16 @@ class Form {
 		this.submitParent.innerText = '';
 		this.submitParent.appendChild(this.submit);
 	}
-	bookingListener() {
+	formListener() {
 		this.submit.addEventListener('click', () => {
 			let name = document.getElementById('name').value;
 			let firstname = document.getElementById('firstname').value;
-			if (name && firstname && !sessionStorage.getItem('limit')) {
 				localStorage.setItem('name', name);
 				localStorage.setItem('firstname', firstname);
 				sessionStorage.setItem('station', document.getElementById('address').textContent);
-				this.canvasInstantiation();
-			} else if (!(name && firstname)) {
-				this.alertInput();
+				this.submitParent.textContent = '';
+			if (!(name && firstname)) {
+				this.manageAlert('Veuillez renseigner vos nom et prénom pour réserver');
 			} else if (sessionStorage.getItem('limit')) {
 				this.manageAlert("Une réservation est en cours. Veuillez l'annuler");
 			}
@@ -48,11 +57,6 @@ class Form {
 	}
 
 	canvasInstantiation() {
-		new Canvas(
-			document.getElementById("canvas-container"),
-			document.getElementById("canvas")
-		);
-		console.log('canvas instance / form.js / canvasInstantiation');
 		this.submit.style.display = 'none';
 	}
 }

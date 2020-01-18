@@ -1,5 +1,5 @@
 class BookingInfo {
-	constructor(set=false, timeLimit=20) {
+	constructor(set = false, timeLimit = 20) {
 		this.set = set;
 		this.timeLimit = Date.now() + timeLimit * 60 * 1000;
 		this.intervalId;
@@ -25,21 +25,20 @@ class BookingInfo {
 			if (Date.now() < sessionStorage.getItem('limit')) {
 				this.infoContainer.style.display = 'flex';
 				this.infoContainer.innerText = '';
+				this.resetInfoStyle();
 				this.createInfoP();
 				this.createTimerP();
 				this.createCancelBtn();
 			} else if (!sessionStorage.getItem('limit')) {
 				this.infoContainer.innerText = 'Réservation annulée. Vous pouvez réserver de nouveau';
-				this.resetInfoContainer();
+				this.resetInfoStyle();
 			} else {
 				clearInterval(this.intervalId);
 				sessionStorage.clear();
 				this.infoContainer.innerText = "La réservation a expirée";
-				this.infoContainer.style.background =  'red';
-				this.infoContainer.style.fontSize =  '30px';
-				this.infoContainer.style.fontWeight =  '900';
+				this.infoStyleAlert(this.infoContainer);
 			}
-			}, 1000);
+		}, 1000);
 	}
 
 	createInfoP() {
@@ -54,7 +53,12 @@ class BookingInfo {
 		let deadline = (sessionStorage.getItem('limit') - Date.now()) / 1000;
 		let dlMin = Math.trunc(deadline / 60);
 		let dlSec = Math.trunc(deadline - dlMin * 60);
-		if (dlSec < 10) {dlSec = "0" + dlSec};
+		if (dlSec < 10) {
+			dlSec = "0" + dlSec;
+		};
+		if (dlMin < 1) {
+			this.infoStyleAlert(timer);
+		}
 		let dlToString = dlMin + ' min ' + dlSec + ' s';
 		timer.innerText = 'Temps restant : ' + dlToString;
 
@@ -71,14 +75,20 @@ class BookingInfo {
 			sessionStorage.clear();
 			setTimeout(() => {
 				this.infoContainer.style.display = "none";
-				this.resetInfoContainer();
+				this.resetInfoStyle();
 			}, 5000);
 		})
 	}
 
-	resetInfoContainer() {
-		this.infoContainer.style.background =  'rgba(0, 0, 0, 0.8)';
-		this.infoContainer.style.fontSize =  'initial';
-		this.infoContainer.style.fontWeight =  'initial';
+	infoStyleAlert(element) {
+		element.style.background = 'red';
+		element.style.fontSize = '30px';
+		element.style.fontWeight = '900';
+	}
+
+	resetInfoStyle() {
+		this.infoContainer.style.background = 'rgba(0, 0, 0, 0.8)';
+		this.infoContainer.style.fontSize = 'initial';
+		this.infoContainer.style.fontWeight = 'initial';
 	}
 }
