@@ -3,6 +3,7 @@ class BookingInfo {
 		this.set = set;
 		this.timeLimit = Date.now() + timeLimit * 60 * 1000;
 		this.intervalId;
+		/* style a gerer avec des class css */
 		this.infoContainer = document.getElementById('booking-info');
 		if (this.set) {
 			sessionStorage.setItem('limit', this.timeLimit);
@@ -17,7 +18,7 @@ class BookingInfo {
 	hiddenBookingApp() {
 		// document.getElementById('booking-app').style.display = 'none'; /* disabling new form */
 		document.getElementById('station').style.display = 'none';
-		document.getElementById('canvas-container').style.display = 'none';
+		document.getElementById('canvas-container').textContent = '';
 	}
 	/* retrieving */
 	getData() {

@@ -1,58 +1,54 @@
 class Form {
-	constructor() {
-		this.bookingSection = document.getElementById('booking-section');
-		this.submitParent = document.getElementById('submit');
-		this.alert = document.getElementById('alert');
-		this.showForm();
-		this.bookingListener();
+	constructor(div) {
+		this.customerInfo = div;
+		this.displayForm();
+		this.bookingVerif(); /* eventListener */
 	}
 
-	showForm() {
-		this.bookingSection.style.display = 'initial';
-		document.getElementById('name').value = localStorage.getItem('name');
-		document.getElementById('firstname').value = localStorage.getItem('firstname');
-		this.addSubmitBtn();
+	displayForm() {
+		this.createInput('Nom : ', 'name', this.customerInfo);
+		this.createInput('Prénom : ', 'firstname', this.customerInfo);
+		this.displayBtn();
 	}
 
-	addSubmitBtn() {
-		this.submit = document.createElement('input');
-		this.submit.type = 'button';
-		this.submit.value = 'Réserver';
-		this.submit.id = 'booking';
-
-		this.submitParent.innerText = '';
-		this.submitParent.appendChild(this.submit);
+	createInput(label, id, parent) {
+		$('<input/>', {
+			type: 'text',
+			id: id,
+			value: localStorage.getItem(id)
+		}).appendTo(
+			$('<label/>', {
+				for: id,
+				text: label
+			}).appendTo(
+				$('<p/>').appendTo(parent)
+			)
+		);
 	}
-	bookingListener() {
-		this.submit.addEventListener('click', () => {
-			let name = document.getElementById('name').value;
-			let firstname = document.getElementById('firstname').value;
-			if (name && firstname && !sessionStorage.getItem('limit')) {
-				localStorage.setItem('name', name);
-				localStorage.setItem('firstname', firstname);
-				sessionStorage.setItem('station', document.getElementById('address').textContent);
-				this.canvasInstantiation();
-			} else if (!(name && firstname)) {
-				this.alertInput();
+
+	/* bug apparition reserver lors du click sur marker */
+	bookingVerif() {
+		$('#interaction').click(() => {
+			if (!($('#name').val() && $('#firstname').val())) {
+				this.displayAlert("Veuillez renseigner vos nom et prénom pour réserver.");
 			} else if (sessionStorage.getItem('limit')) {
-				this.manageAlert("Une réservation est en cours. Veuillez l'annuler");
+				this.displayAlert("Une réservation est en cours. Veuillez l'annuler pour réserver de nouveau.");
 			}
-		})
+		});
 	}
 
-	manageAlert(text) {
-		this.alert.innerText = text;
+	displayAlert(text) {
+		$('#interaction').text(text).addClass('alert').removeClass('btn');
 		setTimeout(() => {
-			this.alert.innerText = '';
+			this.displayBtn();
 		}, 5000);
 	}
 
-	canvasInstantiation() {
-		new Canvas(
-			document.getElementById("canvas-container"),
-			document.getElementById("canvas")
-		);
-		console.log('canvas instance / form.js / canvasInstantiation');
-		this.submit.style.display = 'none';
+	displayBtn() {
+		$('#interaction')
+			.text('Réserver')
+			.addClass('btn')
+			.removeClass('alert');
 	}
+
 }

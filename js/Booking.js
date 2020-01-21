@@ -7,23 +7,37 @@ class Booking {
 			"7b223c89d17e9f045f732705dd821673730331be"
 		);
 
-		// this.myForm = new Form(document.getElementById('station-choice'));
-		// this.myCanvas = new Canvas(
-		// 	document.getElementById("canvas-container"),
-		// 	document.getElementById("canvas")
-		// );
 
 		if (sessionStorage.getItem('limit')) {
 			new BookingInfo();
 		}
+		this.choiceListener();
+		this.interactionListener();
 	}
 
-	formListener() {
-		this.myForm.submitParent.addEventListener('click', () => {
-			if (document.getElementById('name').value &&
-				document.getElementById('firstname').value &&
-				!sessionStorage.getItem('limit')) {
-				this.myCanvas.showCanvas();
+	choiceListener() {
+		let customer = $('#customer-info');
+		customer.click(() => {
+			if (customer.hasClass('btn')) {
+				sessionStorage.setItem('station', this.myMap.station);
+				customer.text('').removeClass('btn');
+				this.myForm = new Form(customer);
+			}
+		});
+	}
+
+	interactionListener() {
+		let interaction = $('#interaction');
+		interaction.click(() => {
+			if ($('#name').val() &&
+				$('#firstname').val() &&
+				!sessionStorage.getItem('limit')
+				&& interaction.hasClass('btn')) {
+					localStorage.setItem('name', $('#name').val());
+					localStorage.setItem('firstname', $('#firstname').val());
+					new Canvas(
+						$("#canvas-container")
+				);
 			}
 		});
 	}
