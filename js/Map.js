@@ -17,7 +17,7 @@ class Map {
 		this.redIcon = L.icon({
 			iconUrl: 'images/bikered.png',
 			iconSize: [redWidth, redHeight],
-			iconAnchor: [redWidth, redHeight],
+			iconAnchor: [redWidth / 2, redHeight],
 			popupAnchor: [0, -redHeight]
 		});
 		this.mapboxUrl = `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${accessToken}`;
@@ -102,7 +102,11 @@ class Map {
 		document.getElementById('address').textContent = station.address;
 		document.getElementById('places').textContent = station.available_bike_stands;
 		document.getElementById('available').textContent = station.available_bikes;
-		document.getElementById('station-choice').style.display = 'initial';
+		if (station.available_bikes) {
+			document.getElementById('station-choice').style.display = 'initial';
+		}	else {
+			document.getElementById('station-choice').style.display = 'none';
+		}
 		this.hideObjects();
 
 	}
